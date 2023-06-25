@@ -1,7 +1,7 @@
 import { User } from "src/model/user/User";
 import { IUserRepository } from "src/model/user/interfaces/IUserRepository";
 
-export class DBInMemory implements IUserRepository {
+export class UserRepositoryInMemory implements IUserRepository {
   private users: User[];
 
   constructor() {

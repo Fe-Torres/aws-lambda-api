@@ -1,7 +1,8 @@
-import { User } from "src/model/user/User";
-import { IUserRepository } from "src/model/user/interfaces/IUserRepository";
 import { UserDTO } from "src/model/user/interfaces/userDto";
 import { randomUUID } from "crypto"
+import { IUserRepository } from "src/model/user/interfaces/IUserRepository";
+import { User } from "src/model/user/User";
+
 export class CreateUserUseCase {
   constructor(private userRepository: IUserRepository) { }
 
