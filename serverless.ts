@@ -1,7 +1,7 @@
 import type { AWS } from '@serverless/typescript';
 
 import createUser from 'src/infra/functions/createUser';
-
+import findUserById from 'src/infra/functions/findUserById';
 
 const serverlessConfiguration: AWS = {
   service: 'ton-api',
@@ -20,7 +20,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { createUser },
+  functions: { createUser, findUserById },
   package: { individually: true },
   custom: {
     esbuild: {

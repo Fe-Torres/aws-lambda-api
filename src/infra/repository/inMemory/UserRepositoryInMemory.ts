@@ -2,12 +2,10 @@ import { User } from "src/model/user/User";
 import { IUserRepository } from "src/model/user/interfaces/IUserRepository";
 
 export class UserRepositoryInMemory implements IUserRepository {
-  private users: User[];
+  private users: User[] = [{ id: "123", name: "Teste Parker", age: 20, email: "apenasfotografo@gmail.com" }];
 
   constructor() {
-    this.users = [
-      { id: "123", name: "Teste Parker", age: 20, email: "apenasfotografo@gmail.com" }
-    ];
+
   }
 
   async save(user: User): Promise<User> {
@@ -19,8 +17,9 @@ export class UserRepositoryInMemory implements IUserRepository {
     return user;
   }
 
-  async findById(userID: string): Promise<User | null> {
-    const user = this.users.find((u) => u.id === userID);
+  async findById(userId: string): Promise<User | null> {
+    console.log("Opaaaaa", userId)
+    const user = this.users.find((u) => u.id === userId);
     return user || null;
   }
 }
