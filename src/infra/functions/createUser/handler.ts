@@ -4,7 +4,7 @@ import { middyfy } from '@libs/lambda';
 import schema from './schema';
 import { StatusCode, StatusMessage } from '../helper/enum';
 import { UserDTO } from 'src/model/user/interfaces/userDto';
-import { makeUserUseCase } from 'src/main/factories/createUserUseCaseFactory';
+import { makeUserUseCase } from '../../../main/factories/createUserFactory';
 
 const createUser: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   const userData: UserDTO = event.body;

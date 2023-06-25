@@ -1,5 +1,5 @@
 import { UserDTO } from 'src/model/user/interfaces/userDto';
-import { CreateUserUseCase } from './createUserUseCase';
+import { CreateUserUseCase } from './createUser';
 import { UserRepositoryInMemory } from 'src/infra/repository/inMemory/UserRepositoryInMemory';
 import { IUserRepository } from 'src/model/user/interfaces/IUserRepository';
 
