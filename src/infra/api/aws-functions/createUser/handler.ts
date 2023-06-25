@@ -2,9 +2,9 @@ import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 import schema from './schema';
-import { StatusCode, StatusMessage } from '../helper/enum';
+import { StatusCode, StatusMessage } from '../../helper/enum';
 import { UserDTO } from 'src/model/user/interfaces/userDto';
-import { makeUserUseCase } from '../../../main/factories/createUserFactory';
+import { makeUserUseCase } from '../../../main/factories/user/createUserFactory';
 
 const createUser: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   const userData: UserDTO = event.body;
