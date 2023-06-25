@@ -12,7 +12,7 @@ export class Website {
     const urlSchema = Joi.string().uri().required();
 
     try {
-      Joi.attempt(url, urlSchema);
+      Joi.valid(url, urlSchema);
       return;
     } catch (error) {
       throw new Error("Invalid url format");
