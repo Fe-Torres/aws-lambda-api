@@ -1,7 +1,7 @@
 import type { AWS } from '@serverless/typescript';
 
-import createUser from 'src/infra/functions/createUser';
-import findUserById from 'src/infra/functions/findUserById';
+import createUser from 'src/infra/aws-functions/createUser';
+import findUserById from 'src/infra/aws-functions/findUserById';
 
 const serverlessConfiguration: AWS = {
   service: 'ton-api',
