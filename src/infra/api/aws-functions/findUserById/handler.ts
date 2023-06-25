@@ -1,13 +1,10 @@
-import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
-import schema from './schema';
 import { StatusCode, StatusMessage } from '../../helper/enum';
-import { makeFindUserByIdUseCase } from '../../../main/factories/findUserByIdFactory';
+import { makeFindUserByIdUseCase } from '../../../../main/factories/user/findUserByIdFactory';
 
-const findUserById: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+const findUserById = async (event) => {
   const { id } = event.pathParameters
-  console.log(id)
 
   try {
     const findUserByIdUseCase = makeFindUserByIdUseCase();

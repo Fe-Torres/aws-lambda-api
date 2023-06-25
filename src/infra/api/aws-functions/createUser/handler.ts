@@ -4,18 +4,18 @@ import { middyfy } from '@libs/lambda';
 import schema from './schema';
 import { StatusCode, StatusMessage } from '../../helper/enum';
 import { UserDTO } from 'src/model/user/interfaces/userDto';
-import { makeUserUseCase } from '../../../main/factories/user/createUserFactory';
+import { makeUserUseCase } from '../../../../main/factories/user/createUserFactory';
 
 const createUser: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   const userData: UserDTO = event.body;
 
   try {
-    const userUseCase = makeUserUseCase(); // Instancia o caso de uso de criação de usuário
-    const createdUser = await userUseCase.execute(userData); // Chama o método execute do caso de uso
+    const userUseCase = makeUserUseCase();
+    const createdUser = await userUseCase.execute(userData);
 
     return formatJSONResponse({
       message: StatusMessage.OK,
-      user: createdUser, // Adicione o usuário criado na resposta, se necessário
+      user: createdUser,
     }, StatusCode.OK);
   } catch (error) {
     console.error('Erro ao criar usuário:', error);

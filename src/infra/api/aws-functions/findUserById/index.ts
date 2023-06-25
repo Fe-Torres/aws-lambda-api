@@ -1,18 +1,12 @@
-import schema from './schema';
 import { handlerPath } from '@libs/handler-resolver';
 
-export default {
+export const findUserById = {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
       http: {
         method: 'get',
-        path: 'user/{id}',
-        request: {
-          schemas: {
-            'application/json': schema,
-          },
-        },
+        path: 'user/{id}'
       },
     },
   ],
