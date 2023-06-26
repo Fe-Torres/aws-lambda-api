@@ -4,7 +4,7 @@ import { StatusCode, StatusMessage } from '../../helper/enum';
 import { makeCountWebsiteAccessUseCase } from '../../../../main/factories/website/countWebsiteAccessFactory';
 
 const countWebsiteAccess = async (event) => {
-  const { url } = event.pathParameters
+  const { url } = event.pathParameters;
 
   try {
     const countWebsiteAccessUseCase = makeCountWebsiteAccessUseCase();

@@ -1,5 +1,5 @@
 import type { AWS } from '@serverless/typescript';
-import { createUser, findUserById, incrementWebsiteAccess, countWebsiteAccess } from './src/infra/api/aws-functions'
+import { createUser, findUserById, incrementWebsiteAccess, countWebsiteAccess } from './src/infra/api/aws-functions';
 
 const serverlessConfiguration: AWS = {
   service: 'ton-api',
@@ -34,4 +34,5 @@ const serverlessConfiguration: AWS = {
   },
 };
 
+// eslint-disable-next-line no-undef
 module.exports = serverlessConfiguration;

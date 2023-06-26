@@ -4,7 +4,7 @@ import { StatusCode, StatusMessage } from '../../helper/enum';
 import { makeFindUserByIdUseCase } from '../../../../main/factories/user/findUserByIdFactory';
 
 const findUserById = async (event) => {
-  const { id } = event.pathParameters
+  const { id } = event.pathParameters;
 
   try {
     const findUserByIdUseCase = makeFindUserByIdUseCase();

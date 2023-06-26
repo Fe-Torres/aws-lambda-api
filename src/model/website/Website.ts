@@ -5,7 +5,7 @@ export class Website {
 
   constructor(url: string) {
     Website.validateUrl(url);
-    this.url = url
+    this.url = url;
   }
 
   static validateUrl(url: string) {
@@ -15,7 +15,7 @@ export class Website {
       Joi.valid(url, urlSchema);
       return;
     } catch (error) {
-      throw new Error("Invalid url format");
+      throw new Error('Invalid url format');
     }
   }
 }

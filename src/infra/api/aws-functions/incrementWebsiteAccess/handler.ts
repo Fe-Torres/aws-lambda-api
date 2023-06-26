@@ -6,7 +6,7 @@ import { StatusCode, StatusMessage } from '../../helper/enum';
 import { makeIncrementWebsiteAccessUseCase } from '../../../../main/factories/website/incrementWebsiteAccessFactory';
 
 const incrementWebsiteAccess: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
-  const { url } = event.body
+  const { url } = event.body;
 
   try {
     const incrementWebsiteAccessUseCase = makeIncrementWebsiteAccessUseCase();

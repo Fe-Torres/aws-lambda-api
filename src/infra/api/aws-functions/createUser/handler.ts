@@ -18,7 +18,6 @@ const createUser: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (eve
       user: createdUser,
     }, StatusCode.OK);
   } catch (error) {
-    console.error('Erro ao criar usuário:', error);
     return formatJSONResponse({
       message: StatusMessage.INTERNAL_SERVER_ERROR,
       error: error.message,
