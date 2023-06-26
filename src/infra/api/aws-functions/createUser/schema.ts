@@ -5,5 +5,5 @@ export default {
     age: { type: 'int' },
     email: { type: 'string' },
   },
-  required: [ 'name', 'email', 'age' ],
+  required: ['name', 'email', 'age'],
 } as const;

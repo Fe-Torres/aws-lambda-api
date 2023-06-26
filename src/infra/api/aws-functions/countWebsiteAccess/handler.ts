@@ -10,15 +10,21 @@ const countWebsiteAccess = async (event) => {
     const countWebsiteAccessUseCase = makeCountWebsiteAccessUseCase();
     const website = await countWebsiteAccessUseCase.execute(url);
 
-    return formatJSONResponse({
-      message: StatusMessage.OK,
-      website,
-    }, StatusCode.OK);
+    return formatJSONResponse(
+      {
+        message: StatusMessage.OK,
+        website,
+      },
+      StatusCode.OK
+    );
   } catch (error) {
-    return formatJSONResponse({
-      message: StatusMessage.INTERNAL_SERVER_ERROR,
-      error: error.message,
-    }, StatusCode.INTERNAL_SERVER_ERROR);
+    return formatJSONResponse(
+      {
+        message: StatusMessage.INTERNAL_SERVER_ERROR,
+        error: error.message,
+      },
+      StatusCode.INTERNAL_SERVER_ERROR
+    );
   }
 };
 

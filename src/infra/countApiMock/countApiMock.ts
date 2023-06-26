@@ -3,9 +3,9 @@ import { IWebsiteDTO } from '../../model/website/interfaces/WebsiteDto';
 
 export class CountApiMock implements IWebsiteAccess {
   private listWebsiteData: IWebsiteDTO[] = [
-    { url: 'www.ton.com.br', accesNumber: 1000 },
-    { url: 'www.google.com.br', accesNumber: 1010 },
-    { url: 'www.facebook.com.br', accesNumber: 1020 },
+    { url: 'https://www.ton.com.br', accesNumber: 1000 },
+    { url: 'https://www.google.com.br', accesNumber: 1010 },
+    { url: 'https://www.facebook.com.br', accesNumber: 1020 },
   ];
 
   public async incrementWebsiteAccess(url?: string): Promise<IWebsiteDTO> {

@@ -10,15 +10,21 @@ const findUserById = async (event) => {
     const findUserByIdUseCase = makeFindUserByIdUseCase();
     const user = await findUserByIdUseCase.execute(id);
 
-    return formatJSONResponse({
-      message: StatusMessage.OK,
-      user,
-    }, StatusCode.OK);
+    return formatJSONResponse(
+      {
+        message: StatusMessage.OK,
+        user,
+      },
+      StatusCode.OK
+    );
   } catch (error) {
-    return formatJSONResponse({
-      message: StatusMessage.INTERNAL_SERVER_ERROR,
-      error: error.message,
-    }, StatusCode.INTERNAL_SERVER_ERROR);
+    return formatJSONResponse(
+      {
+        message: StatusMessage.INTERNAL_SERVER_ERROR,
+        error: error.message,
+      },
+      StatusCode.INTERNAL_SERVER_ERROR
+    );
   }
 };
 

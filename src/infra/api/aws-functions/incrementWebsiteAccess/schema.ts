@@ -3,5 +3,5 @@ export default {
   properties: {
     url: { type: 'string' },
   },
-  required: [ 'url' ],
+  required: ['url'],
 } as const;

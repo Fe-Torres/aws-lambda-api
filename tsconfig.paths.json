@@ -7,6 +7,15 @@
       ],
       "@libs/*": [
         "src/libs/*"
+      ],
+      "@models/*": [
+        "src/model/*"
+      ],
+      "@usecase/*": [
+        "src/usecase/*"
+      ],
+      "@main/*": [
+        "src/main/*"
       ]
     }
   }

@@ -17,7 +17,12 @@ export class User {
     this.email = email;
   }
 
-  private static validateInput(id: string, name: string, age: number, email: string) {
+  private static validateInput(
+    id: string,
+    name: string,
+    age: number,
+    email: string
+  ) {
     const schema = Joi.object({
       id: Joi.string().required(),
       name: Joi.string().required(),

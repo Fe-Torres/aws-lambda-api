@@ -1,10 +1,10 @@
 import { UserDTO } from 'src/model/user/interfaces/userDto';
 import { randomUUID } from 'crypto';
 import { IUserRepository } from 'src/model/user/interfaces/IUserRepository';
-import { User } from 'src/model/user/User';
+import { User } from '@models/user/User';
 
 export class CreateUserUseCase {
-  constructor(private userRepository: IUserRepository) { }
+  constructor(private userRepository: IUserRepository) {}
 
   async execute(userData: UserDTO): Promise<User> {
     const userId = this.generateId();
@@ -17,4 +17,3 @@ export class CreateUserUseCase {
     return randomUUID();
   }
 }
-
