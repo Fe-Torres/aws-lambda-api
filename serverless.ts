@@ -34,5 +34,4 @@ const serverlessConfiguration: AWS = {
   },
 };
 
-// eslint-disable-next-line no-undef
 module.exports = serverlessConfiguration;
