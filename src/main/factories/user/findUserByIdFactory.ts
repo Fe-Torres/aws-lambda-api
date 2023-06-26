@@ -1,5 +1,5 @@
-import { UserRepositoryInMemory } from "../../infra/repository/inMemory/UserRepositoryInMemory";
-import { FindUserByIdUseCase } from "../../useCase/findUserByIdUsecase/findUserById";
+import { UserRepositoryInMemory } from "../../../infra/repository/inMemory/UserRepositoryInMemory";
+import { FindUserByIdUseCase } from "../../../useCase/User/findUserByIdUsecase/findUserById";
 
 
 
