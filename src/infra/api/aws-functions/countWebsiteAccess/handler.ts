@@ -1,12 +1,14 @@
-import { formatJSONResponse } from '@libs/api-gateway';
-import { middyfy } from '@libs/lambda';
 import { StatusCode, StatusMessage } from '../../helper/enum';
 import { makeCountWebsiteAccessUseCase } from '../../../../main/factories/website/countWebsiteAccessFactory';
+import { formatJSONResponse } from '../../../../libs/api-gateway';
+import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { middyfy } from '@libs/lambda';
 
-const countWebsiteAccess = async (event) => {
-  const { url } = event.pathParameters;
-
+const countWebsiteAccess = async (
+  event: APIGatewayEvent
+): Promise<Promise<APIGatewayProxyResult>> => {
   try {
+    const { url } = event.queryStringParameters;
     const countWebsiteAccessUseCase = makeCountWebsiteAccessUseCase();
     const website = await countWebsiteAccessUseCase.execute(url);
 
