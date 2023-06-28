@@ -1,5 +1,5 @@
 import type { AWS } from '@serverless/typescript';
-import { createUser, findUserById, incrementWebsiteAccess, countWebsiteAccess } from './src/infra/api/aws-functions'
+import { createUser, findUserById, incrementWebsiteAccess, countWebsiteAccess } from './src/infra/api/aws-functions';
 
 const serverlessConfiguration: AWS = {
   service: 'ton-api',

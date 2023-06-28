@@ -6,7 +6,7 @@ export const findUserById = {
     {
       http: {
         method: 'get',
-        path: 'user/{id}'
+        path: 'user/{id}',
       },
     },
   ],

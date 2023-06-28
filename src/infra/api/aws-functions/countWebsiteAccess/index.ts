@@ -6,7 +6,7 @@ export const countWebsiteAccess = {
     {
       http: {
         method: 'get',
-        path: 'website/{url}'
+        path: 'website/{url}',
       },
     },
   ],
