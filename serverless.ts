@@ -1,5 +1,10 @@
 import type { AWS } from '@serverless/typescript';
-import { createUser, findUserById, incrementWebsiteAccess, countWebsiteAccess } from './src/infra/api/aws-functions';
+import {
+  createUser,
+  findUserById,
+  incrementWebsiteAccess,
+  countWebsiteAccess,
+} from './src/infra/api/aws-functions';
 
 const serverlessConfiguration: AWS = {
   service: 'ton-api',
@@ -7,7 +12,7 @@ const serverlessConfiguration: AWS = {
   plugins: ['serverless-esbuild', 'serverless-offline'],
   provider: {
     name: 'aws',
-    runtime: 'nodejs14.x',
+    runtime: 'nodejs18.x',
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
@@ -18,7 +23,12 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { createUser, findUserById, incrementWebsiteAccess, countWebsiteAccess },
+  functions: {
+    createUser,
+    findUserById,
+    incrementWebsiteAccess,
+    countWebsiteAccess,
+  },
   package: { individually: true },
   custom: {
     esbuild: {
