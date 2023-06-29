@@ -6,7 +6,7 @@ import { User } from '@models/user/User';
 export class CreateUserUseCase {
   constructor(private userRepository: IUserRepository) {}
 
-  async execute(userData: UserDTO): Promise<User> {
+  async execute(userData: UserDTO): Promise<UserDTO> {
     const userId = this.generateId();
     const user = new User(userId, userData.name, userData.age, userData.email);
     const savedUser = await this.userRepository.save(user);
