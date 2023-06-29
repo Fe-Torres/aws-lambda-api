@@ -1,4 +1,4 @@
-import { UserRepositoryInMemory } from '../../../infra/repository/inMemory/UserRepositoryInMemory';
+import { UserRepositoryInMemory } from '../../../repository/inMemory/UserRepositoryInMemory';
 import { CreateUserUseCase } from '../../../useCase/User/createUserUsecase/createUser';
 
 export const makeUserUseCase = () => {

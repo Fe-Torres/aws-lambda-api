@@ -1,5 +1,5 @@
 import schema from './schema';
-import { handlerPath } from '@libs/handler-resolver';
+import { handlerPath } from '../../helper/handler-resolver';
 
 export const createUser = {
   handler: `${handlerPath(__dirname)}/handler.main`,

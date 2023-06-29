@@ -1,6 +1,6 @@
-import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
-import { formatJSONResponse } from '@libs/api-gateway';
-import { middyfy } from '@libs/lambda';
+import type { ValidatedEventAPIGatewayProxyEvent } from '../../helper/api-gateway';
+import { formatJSONResponse } from '../../helper/api-gateway';
+import { middyfy } from '../../helper/lambda';
 import schema from './schema';
 import { StatusCode, StatusMessage } from '../../helper/enum';
 import { UserDTO } from 'src/model/user/interfaces/userDto';

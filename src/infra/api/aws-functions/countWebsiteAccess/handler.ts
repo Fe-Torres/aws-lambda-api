@@ -1,8 +1,8 @@
 import { StatusCode, StatusMessage } from '../../helper/enum';
 import { makeCountWebsiteAccessUseCase } from '../../../../main/factories/website/countWebsiteAccessFactory';
-import { formatJSONResponse } from '../../../../libs/api-gateway';
+import { formatJSONResponse } from '../../helper/api-gateway';
 import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { middyfy } from '@libs/lambda';
+import { middyfy } from '../../helper/lambda';
 
 const countWebsiteAccess = async (
   event: APIGatewayEvent

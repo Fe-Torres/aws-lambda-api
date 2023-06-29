@@ -1,4 +1,4 @@
-import { UserRepositoryInMemory } from '../../../infra/repository/inMemory/UserRepositoryInMemory';
+import { UserRepositoryInMemory } from '../../../repository/inMemory/UserRepositoryInMemory';
 import { FindUserByIdUseCase } from '../../../useCase/User/findUserByIdUsecase/findUserById';
 
 export const makeFindUserByIdUseCase = () => {

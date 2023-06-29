@@ -5,9 +5,6 @@
       "@functions/*": [
         "src/infra/api/aws-functions/*"
       ],
-      "@libs/*": [
-        "src/libs/*"
-      ],
       "@models/*": [
         "src/model/*"
       ],

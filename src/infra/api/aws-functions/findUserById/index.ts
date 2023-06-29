@@ -1,4 +1,4 @@
-import { handlerPath } from '@libs/handler-resolver';
+import { handlerPath } from '../../helper/handler-resolver';
 
 export const findUserById = {
   handler: `${handlerPath(__dirname)}/handler.main`,
