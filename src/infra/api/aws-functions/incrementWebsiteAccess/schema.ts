@@ -1,7 +1,5 @@
-export default {
-  type: 'object',
-  properties: {
-    url: { type: 'string' },
-  },
-  required: ['url'],
-} as const;
+import Joi from 'joi';
+
+const schema = Joi.string().required().uri();
+
+export default schema ;

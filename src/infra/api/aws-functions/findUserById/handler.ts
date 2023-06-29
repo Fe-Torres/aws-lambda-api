@@ -1,9 +1,12 @@
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { formatJSONResponse } from '../../helper/api-gateway';
 import { middyfy } from '../../helper/lambda';
 import { StatusCode, StatusMessage } from '../../helper/enum';
 import { makeFindUserByIdUseCase } from '../../../../main/factories/user/findUserByIdFactory';
 
-const findUserById = async (event) => {
+const findUserById = async (
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
   const { id } = event.pathParameters;
 
   try {

@@ -4,9 +4,9 @@ export const countWebsiteAccess = {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
-      http: {
+      httpApi: {
         method: 'get',
-        path: 'website',
+        path: '/website',
       },
     },
   ],

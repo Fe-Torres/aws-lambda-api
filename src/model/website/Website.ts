@@ -9,13 +9,15 @@ export class Website {
   }
 
   static validateUrl(url: string) {
-    const urlSchema = Joi.string().uri().required();
+    const urlSchema = Joi.string()
+      .uri({ allowRelative: false })
+      .regex(/^(https?|http):\/\/[^ "]+$/)
+      .required();
 
-    try {
-      Joi.attempt(url, urlSchema);
-      return;
-    } catch (error) {
-      throw new Error('Invalid url format');
+    const { error } = urlSchema.validate(url);
+
+    if (error) {
+      throw new Error('Invalid URL format');
     }
   }
 }

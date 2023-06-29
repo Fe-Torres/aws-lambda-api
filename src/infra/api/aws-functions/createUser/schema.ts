@@ -1,9 +1,9 @@
-export default {
-  type: 'object',
-  properties: {
-    name: { type: 'string' },
-    age: { type: 'int' },
-    email: { type: 'string' },
-  },
-  required: ['name', 'email', 'age'],
-} as const;
+import Joi from 'joi';
+
+const schema = Joi.object({
+  name: Joi.string().required(),
+  age: Joi.number().integer().required(),
+  email: Joi.string().email().required(),
+}).required();
+
+export default schema;
