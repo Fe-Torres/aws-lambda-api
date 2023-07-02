@@ -3,14 +3,16 @@ import { makeCountWebsiteAccessUseCase } from '../../../../main/factories/websit
 import { formatJSONResponse } from '../../helper/api-gateway';
 import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { middyfy } from '../../helper/lambda';
+import { IWebsiteDTO } from '../../../../model/website/interfaces/WebsiteDto';
 
 const countWebsiteAccess = async (
   event: APIGatewayEvent
 ): Promise<Promise<APIGatewayProxyResult>> => {
   try {
-    const { url } = event.queryStringParameters;
+    const WebsiteQueryParams: IWebsiteDTO = event.queryStringParameters;
+    console.log(WebsiteQueryParams);
     const countWebsiteAccessUseCase = makeCountWebsiteAccessUseCase();
-    const website = await countWebsiteAccessUseCase.execute(url);
+    const website = await countWebsiteAccessUseCase.execute(WebsiteQueryParams);
 
     return formatJSONResponse(
       {

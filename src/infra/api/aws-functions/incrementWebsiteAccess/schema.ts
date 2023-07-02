@@ -1,5 +1,8 @@
 import Joi from 'joi';
 
-const schema = Joi.string().required().uri();
+const schema = Joi.string()
+  .uri({ allowRelative: false })
+  .regex(/^(https?|http):\/\/[^ "]+$/)
+  .required();
 
-export default schema ;
+export default schema;
