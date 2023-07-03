@@ -18,4 +18,16 @@ describe('Website', () => {
     }
   );
 
+  test.each([
+    ['www.example.com'],
+    ['example.com'],
+    ['example'],
+    ['ftp://www.example.com'],
+  ])('should throw an error for an invalid URL: %s', (invalidUrl) => {
+    // Assert
+    expect(() => {
+      // Act
+      new Website(invalidUrl);
+    }).toThrow('Invalid URL format');
+  });
 });

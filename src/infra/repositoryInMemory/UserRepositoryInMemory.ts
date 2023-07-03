@@ -3,13 +3,24 @@ import { IUserRepository } from '@models/user/interfaces/IUserRepository';
 import { UserDTO } from '../../model/user/interfaces/userDto';
 
 export class UserRepositoryInMemory implements IUserRepository {
-
   private users: User[] = [
     {
       id: '123',
       name: 'Teste Parker',
       age: 20,
       email: 'apenasfotografo@gmail.com',
+    },
+    {
+      id: '3210',
+      name: 'Marley',
+      age: 11,
+      email: 'marleytorres@gmail.com',
+    },
+    {
+      id: '3210',
+      name: 'Ruivo',
+      age: 4,
+      email: 'ruivotorres@gmail.com',
     },
   ];
 
@@ -34,7 +45,10 @@ export class UserRepositoryInMemory implements IUserRepository {
     return user || null;
   }
 
-  async updateById(userID: string, dataToUpdate: UserDTO): Promise<User | null> {
+  async updateById(
+    userID: string,
+    dataToUpdate: UserDTO
+  ): Promise<User | null> {
     const user = await this.findById(userID);
     if (!user) {
       return null;

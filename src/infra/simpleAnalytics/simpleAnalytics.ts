@@ -3,7 +3,7 @@ import {
   IWebsiteAccess,
 } from '../../model/website/interfaces/IWebsiteAccess';
 import axios from 'axios';
-import { AnalyticsRequestBuilder } from './helper/AnalyticsRequest';
+import { AnalyticsRequestFactory } from './helper/AnalyticsRequest';
 import { IWebsiteResponse } from './helper/IResponse';
 
 export class SimpleAnalytics implements IWebsiteAccess {
@@ -12,11 +12,11 @@ export class SimpleAnalytics implements IWebsiteAccess {
     params?: IAnalyticsParams
   ): Promise<IWebsiteResponse> {
     try {
-      const analyticsRequestBuilder = new AnalyticsRequestBuilder(params);
-      const baseUrlApi = analyticsRequestBuilder.buildBaseUrlApi(urlToAnalyse);
-      const configRequest = analyticsRequestBuilder.buildConfigRequest();
+      const analyticsRequestFactory = new AnalyticsRequestFactory(params);
+      const baseUrlApi = analyticsRequestFactory.buildBaseUrlApi(urlToAnalyse);
+      const configRequest = analyticsRequestFactory.buildConfigRequest();
       const response = await axios.get(baseUrlApi, configRequest);
-      const websiteResponse = analyticsRequestBuilder.buildWebsiteResponse(
+      const websiteResponse = analyticsRequestFactory.buildWebsiteResponse(
         response.data
       );
       return websiteResponse;

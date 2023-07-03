@@ -1,3 +1,12 @@
+export interface ConfigRequest {
+  headers: object;
+  params: {
+    start?: string;
+    end?: string;
+    fields: string;
+  };
+}
+
 export interface IWebsiteResponse {
   url: string;
   totalVisitors: number;

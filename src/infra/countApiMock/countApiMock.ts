@@ -1,25 +1,39 @@
 import { IWebsiteAccess } from '../../model/website/interfaces/IWebsiteAccess';
-import { IWebsiteDTO } from '../../model/website/interfaces/WebsiteDto';
+import { IWebsiteResponse } from '../simpleAnalytics/helper/IResponse';
 
 export class CountApiMock implements IWebsiteAccess {
-  private listWebsiteData: IWebsiteDTO[] = [
-    { url: 'https://www.ton.com.br', accessNumber: 1000 },
-    { url: 'https://www.google.com.br', accessNumber: 1010 },
-    { url: 'https://www.facebook.com.br', accessNumber: 1020 },
+  private listWebsiteData: IWebsiteResponse[] = [
+    {
+      url: 'https://www.ton.com.br',
+      totalPageviews: 2000,
+      totalVisitors: 1000,
+    },
+    {
+      url: 'https://www.google.com.br',
+      totalPageviews: 500,
+      totalVisitors: 100,
+    },
+    {
+      url: 'https://www.facebook.com.br',
+      totalPageviews: 3000,
+      totalVisitors: 1000,
+    },
   ];
 
-  public async incrementWebsiteAccess(url?: string): Promise<IWebsiteDTO> {
-    const website = this.findWebsite(url);
-    website.accessNumber++;
+  public async incrementWebsiteAccess(
+    urlToAnalyse: string
+  ): Promise<IWebsiteResponse> {
+    const website = this.findWebsite(urlToAnalyse);
+    website.totalVisitors++;
     return website;
   }
 
-  public async countWebsiteAccess(url?: string): Promise<IWebsiteDTO> {
+  public async countWebsiteAccess(url?: string): Promise<IWebsiteResponse> {
     const website = this.findWebsite(url);
     return website;
   }
 
-  private findWebsite(url?: string): IWebsiteDTO {
+  private findWebsite(url): IWebsiteResponse {
     if (!url) {
       throw new Error('URL is required');
     }

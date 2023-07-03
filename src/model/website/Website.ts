@@ -9,7 +9,10 @@ export class Website {
   }
 
   static validateUrl(url: string) {
-    const urlSchema = Joi.string().required();
+    const urlSchema = Joi.string()
+      .uri({ allowRelative: false })
+      .regex(/^(https?|http):\/\/[^ "]+$/)
+      .required();
 
     const { error } = urlSchema.validate(url);
 

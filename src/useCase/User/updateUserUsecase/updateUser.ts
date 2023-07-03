@@ -1,11 +1,12 @@
 import { UserDTO } from 'src/model/user/interfaces/userDto';
 import { IUserRepository } from '@models/user/interfaces/IUserRepository';
-import { User } from '@models/user/User';
+
 import {
   IFindUserByEmailUseCase,
   IFindUserByIdUseCase,
   IUpdateUserUseCase,
 } from '../../../model/user/interfaces/IUserUseCase';
+import { User } from '../../../model/user/User';
 
 export class UpdateUserUseCase implements IUpdateUserUseCase {
   constructor(

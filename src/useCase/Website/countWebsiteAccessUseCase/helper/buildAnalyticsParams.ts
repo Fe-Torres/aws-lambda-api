@@ -1,30 +1,41 @@
 import { IAnalyticsParams } from '../../../../model/website/interfaces/IWebsiteAccess';
-import { IWebsiteDTO } from '../../../../model/website/interfaces/WebsiteDto';
 
 export class AnalyticsParamsBuilder {
-  static build(queryParams: IWebsiteDTO): IAnalyticsParams {
+  private analyticsParams: IAnalyticsParams;
 
-    if (queryParams.startDate) {
-      this.isValidDate(queryParams.startDate);
-    }
-
-    if (queryParams.endDate) {
-      this.isValidDate(queryParams.endDate);
-    }
-
-    return queryParams;
-
+  constructor() {
+    this.analyticsParams = {};
   }
 
-  private static isValidDate(dateStr: string): boolean {
+  public withFields(fields: string): AnalyticsParamsBuilder {
+    this.analyticsParams.fields = fields;
+    return this;
+  }
+
+  public withStartDate(startDate: string): AnalyticsParamsBuilder {
+    if (this.isValidDate(startDate)) {
+      this.analyticsParams.startDate = startDate;
+    }
+    return this;
+  }
+
+  public withEndDate(endDate: string): AnalyticsParamsBuilder {
+    if (this.isValidDate(endDate)) {
+      this.analyticsParams.endDate = endDate;
+    }
+    return this;
+  }
+
+  private isValidDate(dateStr: string): boolean {
     // Verificar se a data está no formato "YYYY-MM-DD" ou "DD-MM-YYYY"
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     if (dateRegex.test(dateStr)) {
       return true;
     }
-
     return false;
   }
 
-
+  public build(): IAnalyticsParams {
+    return this.analyticsParams;
+  }
 }

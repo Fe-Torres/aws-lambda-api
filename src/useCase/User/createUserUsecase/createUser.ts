@@ -1,13 +1,17 @@
 import { UserDTO } from 'src/model/user/interfaces/userDto';
 import { randomUUID } from 'crypto';
-import { IUserRepository } from '@models/user/interfaces/IUserRepository'; import { User } from '@models/user/User';
-import { ICreateUserUseCase, IFindUserByEmailUseCase } from '../../../model/user/interfaces/IUserUseCase';
+import { IUserRepository } from '@models/user/interfaces/IUserRepository';
+import {
+  ICreateUserUseCase,
+  IFindUserByEmailUseCase,
+} from '../../../model/user/interfaces/IUserUseCase';
+import { User } from '../../../model/user/User';
 
 export class CreateUserUseCase implements ICreateUserUseCase {
   constructor(
     private userRepository: IUserRepository,
     private findUserByEmail: IFindUserByEmailUseCase
-  ) { }
+  ) {}
 
   async execute(userData: UserDTO): Promise<UserDTO> {
     await this.findUserByEmail.execute(userData.email);
