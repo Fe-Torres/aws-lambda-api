@@ -98,6 +98,38 @@
         "summary": "Get All Users",
         "responses": {
           "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "example": {
+                "name": "Ineszinha",
+                "age": "63",
+                "email": "intes.oliveira@gmail.com"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
             "description": "OK"
           }
         }
@@ -118,7 +150,14 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
           }
         }
       },
@@ -138,19 +177,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "age": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  }
-                },
-                "required": ["name", "age", "email"]
+                "$ref": "#/components/schemas/User"
+              },
+              "example": {
+                "name": "Ineszinha",
+                "age": "63",
+                "email": "intes.oliveira@gmail.com"
               }
             }
           }
@@ -294,6 +326,21 @@
           }
         },
         "required": ["pageviews", "device_types", "browser_names", "os_names"]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "age": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "age", "email"]
       }
     }
   }
