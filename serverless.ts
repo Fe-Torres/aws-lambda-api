@@ -3,6 +3,7 @@ import {
   createUser,
   findUserById,
   deleteUserById,
+  findAllUsers,
   incrementWebsiteAccess,
   countWebsiteAccess,
 } from './src/infra/api/aws-functions';
@@ -47,6 +48,7 @@ const serverlessConfiguration: AWS = {
   functions: {
     createUser,
     findUserById,
+    findAllUsers,
     deleteUserById,
     incrementWebsiteAccess,
     countWebsiteAccess,

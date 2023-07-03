@@ -3,3 +3,4 @@ export { findUserById } from './findUserById';
 export { incrementWebsiteAccess } from './incrementWebsiteAccess';
 export { countWebsiteAccess } from './countWebsiteAccess';
 export { deleteUserById } from './deleteUserById';
+export { findAllUsers } from './findAllUsers';

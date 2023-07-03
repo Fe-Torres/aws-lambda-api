@@ -11,6 +11,9 @@ export interface IFindUserByIdUseCase {
 export interface IFindUserByEmailUseCase {
   execute(email: string): Promise<UserDTO>;
 }
+export interface IFindAllUsersUseCase {
+  execute(): Promise<UserDTO[]>;
+}
 
 export interface IUpdateUserUseCase {
   execute(userId: string, userData: UserDTO): Promise<UserDTO>;

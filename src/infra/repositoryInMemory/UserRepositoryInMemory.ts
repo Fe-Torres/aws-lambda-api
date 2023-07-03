@@ -3,6 +3,7 @@ import { IUserRepository } from '@models/user/interfaces/IUserRepository';
 import { UserDTO } from '../../model/user/interfaces/userDto';
 
 export class UserRepositoryInMemory implements IUserRepository {
+
   private users: User[] = [
     {
       id: '123',
@@ -25,7 +26,9 @@ export class UserRepositoryInMemory implements IUserRepository {
     const user = this.users.find((u) => u.id === userId);
     return user || null;
   }
-
+  async findAll(): Promise<UserDTO[]> {
+    return this.users;
+  }
   async findByEmail(email: string): Promise<User | null> {
     const user = this.users.find((u) => u.email === email);
     return user || null;

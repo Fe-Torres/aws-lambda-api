@@ -14,6 +14,17 @@ export class DynamoDBUserRepository implements IUserRepository {
     this.documentClient = dynamoDBClient();
   }
 
+  async findAll(): Promise<UserDTO[]> {
+    const params: DocumentClient.ScanInput = {
+      TableName: this.tableName,
+    };
+
+    const result = await this.documentClient.scan(params).promise();
+    const users = UserMapperDynamoDb.mapScanResultToUsers(result);
+
+    return users;
+  }
+
   async findByEmail(email: string): Promise<User | null> {
     const params: DocumentClient.ScanInput = {
       TableName: this.tableName,
