@@ -1,24 +1,54 @@
 import type { AWS } from '@serverless/typescript';
-import { createUser, findUserById, incrementWebsiteAccess, countWebsiteAccess } from './src/infra/api/aws-functions';
+import {
+  createUser,
+  findUserById,
+  incrementWebsiteAccess,
+  countWebsiteAccess,
+} from './src/infra/api/aws-functions';
+
+// Validar a transformação de uma env
+const providerRegion = 'us-east-1';
 
 const serverlessConfiguration: AWS = {
-  service: 'ton-api',
+  service: 'aws-serverless-typescript-api',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild', 'serverless-offline'],
+  plugins: ['serverless-esbuild', 'serverless-offline', 'serverless-dotenv-plugin'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
-    apiGateway: {
-      minimumCompressionSize: 1024,
+    region: providerRegion,
+    httpApi: {
       shouldStartNameWithService: true,
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
+    iam: {
+      role: {
+        statements: [{
+          Effect: 'Allow',
+          Action: [
+            'dynamodb:DescribeTable',
+            'dynamodb:Query',
+            'dynamodb:Scan',
+            'dynamodb:GetItem',
+            'dynamodb:PutItem',
+            'dynamodb:UpdateItem',
+            'dynamodb:DeleteItem',
+          ],
+          Resource: `arn:aws:dynamodb:${providerRegion}:*:table/UserTable`,
+        }],
+      },
+    },
   },
   // import the function via paths
-  functions: { createUser, findUserById, incrementWebsiteAccess, countWebsiteAccess },
+  functions: {
+    createUser,
+    findUserById,
+    incrementWebsiteAccess,
+    countWebsiteAccess,
+  },
   package: { individually: true },
   custom: {
     esbuild: {
@@ -31,7 +61,37 @@ const serverlessConfiguration: AWS = {
       platform: 'node',
       concurrency: 10,
     },
+    dynamodb: {
+      start: {
+        port: 5000,
+        inMemory: true,
+        migrate: true,
+      },
+      stages: 'dev',
+    },
+  },
+  resources: {
+    Resources: {
+      TodosTable: {
+        Type: 'AWS::DynamoDB::Table',
+        Properties: {
+          TableName: 'UserTable',
+          AttributeDefinitions: [{
+            AttributeName: 'id',
+            AttributeType: 'S',
+          }],
+          KeySchema: [{
+            AttributeName: 'id',
+            KeyType: 'HASH',
+          }],
+          ProvisionedThroughput: {
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1,
+          },
+
+        },
+      },
+    },
   },
 };
-
 module.exports = serverlessConfiguration;

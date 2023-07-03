@@ -1,18 +1,13 @@
-import schema from './schema';
-import { handlerPath } from '@libs/handler-resolver';
+import { handlerPath } from '../../helper/handler-resolver';
 
 export const createUser = {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
-      http: {
+      httpApi: {
         method: 'post',
-        path: 'user',
-        request: {
-          schemas: {
-            'application/json': schema,
-          },
-        },
+        path: '/user',
+
       },
     },
   ],

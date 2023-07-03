@@ -4,9 +4,14 @@ import { IUserRepository } from 'src/model/user/interfaces/IUserRepository';
 import { User } from '@models/user/User';
 
 export class CreateUserUseCase {
-  constructor(private userRepository: IUserRepository) {}
+  constructor(private userRepository: IUserRepository) { }
 
-  async execute(userData: UserDTO): Promise<User> {
+  async execute(userData: UserDTO): Promise<UserDTO> {
+    const userWithEmailExists = await this.userRepository.findByEmail(userData.email);
+    if (userWithEmailExists) {
+      throw new Error('Email already exists');
+    }
+
     const userId = this.generateId();
     const user = new User(userId, userData.name, userData.age, userData.email);
     const savedUser = await this.userRepository.save(user);

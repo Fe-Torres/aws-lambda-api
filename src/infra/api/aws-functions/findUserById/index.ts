@@ -1,12 +1,12 @@
-import { handlerPath } from '@libs/handler-resolver';
+import { handlerPath } from '../../helper/handler-resolver';
 
 export const findUserById = {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
-      http: {
+      httpApi: {
         method: 'get',
-        path: 'user/{id}',
+        path: '/user/{id}',
       },
     },
   ],

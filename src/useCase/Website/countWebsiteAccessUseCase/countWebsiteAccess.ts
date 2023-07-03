@@ -1,14 +1,17 @@
+import { IWebsiteResponse } from '../../../infra/simpleAnalytics/helper/IResponse';
 import { Website } from '../../../model/website/Website';
 import { IWebsiteAccess } from '../../../model/website/interfaces/IWebsiteAccess';
 import { IWebsiteDTO } from '../../../model/website/interfaces/WebsiteDto';
+import { AnalyticsParamsBuilder } from './helper/buildAnalyticsParams';
 
 export class CountWebsiteAccessUseCase {
-  constructor(private websiteAccess: IWebsiteAccess) {}
+  constructor(private websiteAccess: IWebsiteAccess) { }
 
-  async execute(url: string): Promise<IWebsiteDTO> {
-    const website = new Website(url);
+  async execute(WebsiteQueryParams: IWebsiteDTO): Promise<IWebsiteResponse> {
+    const website = new Website(WebsiteQueryParams.url);
+    const analyticsParams = AnalyticsParamsBuilder.build(WebsiteQueryParams);
     const webSiteData = await this.websiteAccess.countWebsiteAccess(
-      website.url
+      website.url, analyticsParams
     );
     return webSiteData;
   }
