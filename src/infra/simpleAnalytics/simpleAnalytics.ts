@@ -21,7 +21,7 @@ export class SimpleAnalytics implements IWebsiteAccess {
       );
       return websiteResponse;
     } catch (error) {
-      throw new Error(`Error getting analysis data: ${error}`);
+      throw new Error(`Error getting analysis data: ${error.message}`);
     }
   }
 
@@ -32,7 +32,7 @@ export class SimpleAnalytics implements IWebsiteAccess {
       await axios.get(urlToAnalyse, { headers: { userAgent } });
       return;
     } catch (error) {
-      throw new Error(`Error when incrementing access: ${error}`);
+      throw new Error(`Error when incrementing access: ${error.message}`);
     }
   }
 }
