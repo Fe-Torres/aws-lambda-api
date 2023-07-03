@@ -5,6 +5,9 @@ import { FindUserByEmailUseCase } from '../../../useCase/User/findUserByEmailUse
 export const makeUserUseCase = () => {
   const userRepository = new DynamoDBUserRepository();
   const findUserByEmailUseCase = new FindUserByEmailUseCase(userRepository);
-  const userUseCase = new CreateUserUseCase(userRepository, findUserByEmailUseCase);
+  const userUseCase = new CreateUserUseCase(
+    userRepository,
+    findUserByEmailUseCase
+  );
   return userUseCase;
 };

@@ -26,7 +26,6 @@ describe('User', () => {
     const invalidAge = -5;
     const invalidEmail = 'invalidemail';
 
-    // Act & Assert
     expect(
       () => new User(invalidId, 'John Doe', 25, 'johndoe@example.com')
     ).toThrow(Error);

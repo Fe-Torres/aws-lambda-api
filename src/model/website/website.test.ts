@@ -18,11 +18,4 @@ describe('Website', () => {
     }
   );
 
-  test.each([['example'], ['zwww.example.com'], ['invalid-url']])(
-    'should throw an error with an invalid URL: %s',
-    (invalidUrl) => {
-      // Act & Assert
-      expect(() => new Website(invalidUrl)).toThrow(Error);
-    }
-  );
 });

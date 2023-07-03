@@ -74,7 +74,10 @@ export class DynamoDBUserRepository implements IUserRepository {
     return user;
   }
 
-  async updateById(userID: string, dataToUpdate: UserDTO): Promise<User | null> {
+  async updateById(
+    userID: string,
+    dataToUpdate: UserDTO
+  ): Promise<User | null> {
     const userToUpdate = await this.findById(userID);
     if (!userToUpdate) {
       return null;
@@ -86,6 +89,11 @@ export class DynamoDBUserRepository implements IUserRepository {
         id: userID,
       },
       UpdateExpression: 'set #name = :name, #email = :email, #age = :age',
+      ExpressionAttributeNames: {
+        '#name': 'name',
+        '#email': 'email',
+        '#age': 'age',
+      },
       ExpressionAttributeValues: {
         ':name': dataToUpdate.name,
         ':email': dataToUpdate.email,
@@ -94,10 +102,9 @@ export class DynamoDBUserRepository implements IUserRepository {
       ReturnValues: 'ALL_NEW',
     };
 
-    const result = await this.documentClient.update(params).promise();
-    const updatedUser = UserMapperDynamoDb.mapGetResultToUser(result);
+    await this.documentClient.update(params).promise();
 
-    return updatedUser;
+    return { id: userID, ...dataToUpdate };
   }
 
   async deleteById(userID: string): Promise<void> {

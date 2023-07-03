@@ -6,6 +6,7 @@ import {
   findAllUsers,
   incrementWebsiteAccess,
   countWebsiteAccess,
+  updateUser,
 } from './src/infra/api/aws-functions';
 
 // Validar a transformação de uma env
@@ -14,7 +15,11 @@ const providerRegion = 'us-east-1';
 const serverlessConfiguration: AWS = {
   service: 'aws-serverless-typescript-api',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild', 'serverless-offline', 'serverless-dotenv-plugin'],
+  plugins: [
+    'serverless-esbuild',
+    'serverless-offline',
+    'serverless-dotenv-plugin',
+  ],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
@@ -28,19 +33,21 @@ const serverlessConfiguration: AWS = {
     },
     iam: {
       role: {
-        statements: [{
-          Effect: 'Allow',
-          Action: [
-            'dynamodb:DescribeTable',
-            'dynamodb:Query',
-            'dynamodb:Scan',
-            'dynamodb:GetItem',
-            'dynamodb:PutItem',
-            'dynamodb:UpdateItem',
-            'dynamodb:DeleteItem',
-          ],
-          Resource: `arn:aws:dynamodb:${providerRegion}:*:table/UserTable`,
-        }],
+        statements: [
+          {
+            Effect: 'Allow',
+            Action: [
+              'dynamodb:DescribeTable',
+              'dynamodb:Query',
+              'dynamodb:Scan',
+              'dynamodb:GetItem',
+              'dynamodb:PutItem',
+              'dynamodb:UpdateItem',
+              'dynamodb:DeleteItem',
+            ],
+            Resource: `arn:aws:dynamodb:${providerRegion}:*:table/UserTable`,
+          },
+        ],
       },
     },
   },
@@ -50,6 +57,7 @@ const serverlessConfiguration: AWS = {
     findUserById,
     findAllUsers,
     deleteUserById,
+    updateUser,
     incrementWebsiteAccess,
     countWebsiteAccess,
   },
@@ -80,19 +88,22 @@ const serverlessConfiguration: AWS = {
         Type: 'AWS::DynamoDB::Table',
         Properties: {
           TableName: 'UserTable',
-          AttributeDefinitions: [{
-            AttributeName: 'id',
-            AttributeType: 'S',
-          }],
-          KeySchema: [{
-            AttributeName: 'id',
-            KeyType: 'HASH',
-          }],
+          AttributeDefinitions: [
+            {
+              AttributeName: 'id',
+              AttributeType: 'S',
+            },
+          ],
+          KeySchema: [
+            {
+              AttributeName: 'id',
+              KeyType: 'HASH',
+            },
+          ],
           ProvisionedThroughput: {
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1,
           },
-
         },
       },
     },
