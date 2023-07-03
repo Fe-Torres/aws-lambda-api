@@ -14,18 +14,23 @@ export class DynamoDBUserRepository implements IUserRepository {
     this.documentClient = dynamoDBClient();
   }
 
-  async findByEmail(email: string): Promise<User> {
-    const params: DocumentClient.GetItemInput = {
+  async findByEmail(email: string): Promise<User | null> {
+    const params: DocumentClient.ScanInput = {
       TableName: this.tableName,
-      Key: {
-        email: email,
+      FilterExpression: 'email = :email',
+      ExpressionAttributeValues: {
+        ':email': email,
       },
     };
 
-    const result = await this.documentClient.get(params).promise();
-    const user = UserMapperDynamoDb.mapGetResultToUser(result);
+    const result = await this.documentClient.scan(params).promise();
+    const users = UserMapperDynamoDb.mapScanResultToUsers(result);
 
-    return user;
+    if (users && users.length > 0) {
+      return users[0];
+    }
+
+    return null;
   }
 
   async save(user: User): Promise<User> {

@@ -1,4 +1,5 @@
-import { IUserRepository } from '@models/user/interfaces/IUserRepository'; import { UserDTO } from '../../../model/user/interfaces/userDto';
+import { UserDTO } from '../../../model/user/interfaces/userDto';
+import { IUserRepository } from '@models/user/interfaces/IUserRepository';
 import { IFindUserByIdUseCase } from '../../../model/user/interfaces/IUserUseCase';
 
 export class FindUserByIdUseCase implements IFindUserByIdUseCase {

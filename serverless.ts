@@ -2,6 +2,7 @@ import type { AWS } from '@serverless/typescript';
 import {
   createUser,
   findUserById,
+  deleteUserById,
   incrementWebsiteAccess,
   countWebsiteAccess,
 } from './src/infra/api/aws-functions';
@@ -46,6 +47,7 @@ const serverlessConfiguration: AWS = {
   functions: {
     createUser,
     findUserById,
+    deleteUserById,
     incrementWebsiteAccess,
     countWebsiteAccess,
   },
