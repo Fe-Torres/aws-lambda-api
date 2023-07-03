@@ -12,7 +12,7 @@ const providerRegion = 'us-east-1';
 const serverlessConfiguration: AWS = {
   service: 'aws-serverless-typescript-api',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild', 'serverless-offline'],
+  plugins: ['serverless-esbuild', 'serverless-offline', 'serverless-dotenv-plugin'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
@@ -47,9 +47,10 @@ const serverlessConfiguration: AWS = {
     createUser,
     findUserById,
     incrementWebsiteAccess,
-    countWebsiteAccess },
+    countWebsiteAccess,
+  },
   package: { individually: true },
-  custom:{
+  custom: {
     esbuild: {
       bundle: true,
       minify: false,
@@ -60,8 +61,8 @@ const serverlessConfiguration: AWS = {
       platform: 'node',
       concurrency: 10,
     },
-    dynamodb:{
-      start:{
+    dynamodb: {
+      start: {
         port: 5000,
         inMemory: true,
         migrate: true,

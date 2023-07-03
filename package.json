@@ -39,6 +39,7 @@
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
     "serverless": "^3.32.2",
+    "serverless-dotenv-plugin": "^6.0.0",
     "serverless-esbuild": "^1.23.3",
     "serverless-offline": "^12.0.4",
     "ts-node": "^10.4.0",

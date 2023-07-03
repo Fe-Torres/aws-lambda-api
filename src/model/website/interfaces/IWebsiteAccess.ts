@@ -1,4 +1,4 @@
-import { IWebsiteDTO } from './WebsiteDto';
+import { IWebsiteResponse } from '../../../infra/simpleAnalytics/helper/IResponse';
 
 export interface IAnalyticsParams {
   fields?: string;
@@ -7,6 +7,6 @@ export interface IAnalyticsParams {
 }
 
 export interface IWebsiteAccess {
-  incrementWebsiteAccess(url?: string);
-  countWebsiteAccess(url?: string, params?: IAnalyticsParams): Promise<IWebsiteDTO>;
+  incrementWebsiteAccess(urlToAnalyse: string);
+  countWebsiteAccess(urlToAnalyse: string, params?: IAnalyticsParams): Promise<IWebsiteResponse>;
 }

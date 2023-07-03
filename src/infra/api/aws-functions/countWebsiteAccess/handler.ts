@@ -10,14 +10,13 @@ const countWebsiteAccess = async (
 ): Promise<Promise<APIGatewayProxyResult>> => {
   try {
     const WebsiteQueryParams: IWebsiteDTO = event.queryStringParameters;
-    console.log(WebsiteQueryParams);
     const countWebsiteAccessUseCase = makeCountWebsiteAccessUseCase();
     const website = await countWebsiteAccessUseCase.execute(WebsiteQueryParams);
 
     return formatJSONResponse(
       {
         message: StatusMessage.OK,
-        website,
+        ...website,
       },
       StatusCode.OK
     );

@@ -1,19 +1,13 @@
-
 export interface IWebsiteResponse {
-  message: string;
-  website: IWebsite;
-}
-
-interface IWebsite {
   url: string;
-  histogram: IHistogramData[];
-  visitors: number;
-  pageviews: number;
-  start: string;
-  end: string;
-  device_types: IDeviceType[];
-  browser_names: IBrowserName[];
-  os_names: IOSName[];
+  totalVisitors: number;
+  totalPageviews: number;
+  histogram?: IHistogramData[];
+  start?: string;
+  end?: string;
+  device_types?: IDeviceType[];
+  browser_names?: IBrowserName[];
+  os_names?: IOSName[];
 }
 
 interface IHistogramData {
