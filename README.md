@@ -37,3 +37,9 @@ Gera o pacote da aplicação pronta para implantação. O pacote será criado na
 Executa os testes automatizados da aplicação.
 
 Se você deseja contribuir para este projeto, sinta-se à vontade para abrir uma issue ou enviar um pull request. Seu feedback e contribuições são sempre bem-vindos!
+
+### Requisições e Documentações
+
+Você encontrará na pasta Docs arquivos para configurar seu software para realizar chamadas http
+Para insominia use: insominiaTon.json ou HarTon.har
+Para postman use: HarTon.har
