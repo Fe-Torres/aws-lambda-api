@@ -4,9 +4,9 @@ describe('User', () => {
   test('should create a new User instance with valid input', () => {
     // Arrange
     const validId = '1';
-    const validName = 'John Doe';
+    const validName = 'Torres Tester';
     const validAge = 25;
-    const validEmail = 'johndoe@example.com';
+    const validEmail = 'tt@example.com';
 
     // Act
     const user = new User(validId, validName, validAge, validEmail);
@@ -27,14 +27,16 @@ describe('User', () => {
     const invalidEmail = 'invalidemail';
 
     expect(
-      () => new User(invalidId, 'John Doe', 25, 'johndoe@example.com')
+      () => new User(invalidId, 'Torres Tester', 25, 'tt@example.com')
     ).toThrow(Error);
-    expect(() => new User('1', invalidName, 25, 'johndoe@example.com')).toThrow(
+    expect(() => new User('1', invalidName, 25, 'tt@example.com')).toThrow(
       Error
     );
     expect(
-      () => new User('1', 'John Doe', invalidAge, 'johndoe@example.com')
+      () => new User('1', 'Torres Tester', invalidAge, 'tt@example.com')
     ).toThrow(Error);
-    expect(() => new User('1', 'John Doe', 25, invalidEmail)).toThrow(Error);
+    expect(() => new User('1', 'Torres Tester', 25, invalidEmail)).toThrow(
+      Error
+    );
   });
 });

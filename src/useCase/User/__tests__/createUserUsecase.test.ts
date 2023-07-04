@@ -16,9 +16,9 @@ describe('CreateUserUseCase', () => {
 
   test('should create a new user', async () => {
     const userData = {
-      name: 'John Doe',
+      name: 'Torres Tester',
       age: 25,
-      email: 'johndoe@example.com',
+      email: 'tt@example.com',
     };
 
     const result = await createUserUseCase.execute(userData);
@@ -31,7 +31,7 @@ describe('CreateUserUseCase', () => {
 
   test('should throw an error when user already exists', async () => {
     const userData = {
-      name: 'John Doe',
+      name: 'Torres Tester',
       age: 25,
       email: 'apenasfotografo@gmail.com',
     };
