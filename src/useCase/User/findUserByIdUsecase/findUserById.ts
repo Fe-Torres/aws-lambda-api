@@ -1,7 +1,8 @@
-import { IUserRepository } from 'src/model/user/interfaces/IUserRepository';
+import { IUserRepository } from '@models/user/interfaces/IUserRepository';
 import { UserDTO } from '../../../model/user/interfaces/userDto';
+import { IFindUserByIdUseCase } from '../../../model/user/interfaces/IUserUseCase';
 
-export class FindUserByIdUseCase {
+export class FindUserByIdUseCase implements IFindUserByIdUseCase {
   constructor(private userRepository: IUserRepository) {}
 
   async execute(userId: string): Promise<UserDTO> {

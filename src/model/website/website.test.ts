@@ -18,11 +18,16 @@ describe('Website', () => {
     }
   );
 
-  test.each([['example'], ['zwww.example.com'], ['invalid-url']])(
-    'should throw an error with an invalid URL: %s',
-    (invalidUrl) => {
-      // Act & Assert
-      expect(() => new Website(invalidUrl)).toThrow(Error);
-    }
-  );
+  test.each([
+    ['www.example.com'],
+    ['example.com'],
+    ['example'],
+    ['ftp://www.example.com'],
+  ])('should throw an error for an invalid URL: %s', (invalidUrl) => {
+    // Assert
+    expect(() => {
+      // Act
+      new Website(invalidUrl);
+    }).toThrow('Invalid URL format');
+  });
 });

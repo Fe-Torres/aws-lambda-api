@@ -1,7 +1,7 @@
 import { IAnalyticsParams } from '../../../model/website/interfaces/IWebsiteAccess';
-import { IWebsiteResponse } from './IResponse';
+import { ConfigRequest, IWebsiteResponse } from './IResponse';
 
-export class AnalyticsRequestBuilder {
+export class AnalyticsRequestFactory {
   private apiVersion: string;
   private headers: object;
   private defaultFieldParam: string;
@@ -19,7 +19,8 @@ export class AnalyticsRequestBuilder {
   }
 
   public buildBaseUrlApi(urlToAnalyse: string): string {
-    const baseUrlApi = `https://simpleanalytics.com/${urlToAnalyse}?version=${this.apiVersion}`;
+    const urlToAnalyseParsed = this.parseUrlToAnalyse(urlToAnalyse);
+    const baseUrlApi = `https://simpleanalytics.com/${urlToAnalyseParsed}?version=${this.apiVersion}`;
     return baseUrlApi;
   }
 
@@ -30,15 +31,19 @@ export class AnalyticsRequestBuilder {
       this._params.fields = this.defaultFieldParam;
     }
   }
+  private parseUrlToAnalyse(urlToAnalyse: string): string {
+    const parsedUrl = urlToAnalyse.replace(/^https?:\/\//i, '');
+    return `${parsedUrl}.json`;
+  }
 
-  public buildConfigRequest(): object {
+  public buildConfigRequest(): ConfigRequest {
     this.parseFieldsParams();
-    const configRequest = {
+    const configRequest: ConfigRequest = {
       headers: this.headers,
       params: {
         start: this._params.startDate,
         end: this._params.endDate,
-        ...this._params,
+        fields: this._params.fields,
       },
     };
     return configRequest;

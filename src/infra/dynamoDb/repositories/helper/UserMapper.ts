@@ -11,7 +11,7 @@ interface DynamoDBUserItem {
 export class UserMapperDynamoDb {
   private static mapToUser(item: DynamoDB.DocumentClient.AttributeMap): User {
     return {
-      id: item.id,
+      id: item?.id,
       name: item.name,
       email: item.email,
       age: item.age,
@@ -25,6 +25,20 @@ export class UserMapperDynamoDb {
 
     return this.mapToUser(result.Item as DynamoDBUserItem);
   }
+
+  static mapScanResultToUsers(result: DynamoDB.DocumentClient.ScanOutput): User[] {
+    if (!result.Items) {
+      return [];
+    }
+
+    return result.Items.map((item) => ({
+      id: item.id,
+      name: item.name,
+      email: item.email,
+      age: item.age,
+    }));
+  }
+
 
   static mapPutItemToUser(item: DynamoDB.DocumentClient.PutItemOutput): User {
     return this.mapToUser(item.Attributes as DynamoDBUserItem);

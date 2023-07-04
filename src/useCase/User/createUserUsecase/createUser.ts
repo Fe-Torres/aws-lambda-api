@@ -1,17 +1,20 @@
 import { UserDTO } from 'src/model/user/interfaces/userDto';
 import { randomUUID } from 'crypto';
-import { IUserRepository } from 'src/model/user/interfaces/IUserRepository';
-import { User } from '@models/user/User';
+import { IUserRepository } from '@models/user/interfaces/IUserRepository';
+import {
+  ICreateUserUseCase,
+  IFindUserByEmailUseCase,
+} from '../../../model/user/interfaces/IUserUseCase';
+import { User } from '../../../model/user/User';
 
-export class CreateUserUseCase {
-  constructor(private userRepository: IUserRepository) { }
+export class CreateUserUseCase implements ICreateUserUseCase {
+  constructor(
+    private userRepository: IUserRepository,
+    private findUserByEmail: IFindUserByEmailUseCase
+  ) {}
 
   async execute(userData: UserDTO): Promise<UserDTO> {
-    const userWithEmailExists = await this.userRepository.findByEmail(userData.email);
-    if (userWithEmailExists) {
-      throw new Error('Email already exists');
-    }
-
+    await this.findUserByEmail.execute(userData.email);
     const userId = this.generateId();
     const user = new User(userId, userData.name, userData.age, userData.email);
     const savedUser = await this.userRepository.save(user);

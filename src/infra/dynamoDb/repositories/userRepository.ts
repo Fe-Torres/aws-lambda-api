@@ -14,18 +14,34 @@ export class DynamoDBUserRepository implements IUserRepository {
     this.documentClient = dynamoDBClient();
   }
 
-  async findByEmail(email: string): Promise<User> {
-    const params: DocumentClient.GetItemInput = {
+  async findAll(): Promise<UserDTO[]> {
+    const params: DocumentClient.ScanInput = {
       TableName: this.tableName,
-      Key: {
-        email: email,
+    };
+
+    const result = await this.documentClient.scan(params).promise();
+    const users = UserMapperDynamoDb.mapScanResultToUsers(result);
+
+    return users;
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    const params: DocumentClient.ScanInput = {
+      TableName: this.tableName,
+      FilterExpression: 'email = :email',
+      ExpressionAttributeValues: {
+        ':email': email,
       },
     };
 
-    const result = await this.documentClient.get(params).promise();
-    const user = UserMapperDynamoDb.mapGetResultToUser(result);
+    const result = await this.documentClient.scan(params).promise();
+    const users = UserMapperDynamoDb.mapScanResultToUsers(result);
 
-    return user;
+    if (users && users.length > 0) {
+      return users[0];
+    }
+
+    return null;
   }
 
   async save(user: User): Promise<User> {
@@ -58,7 +74,10 @@ export class DynamoDBUserRepository implements IUserRepository {
     return user;
   }
 
-  async updateById(userID: string, dataToUpdate: UserDTO): Promise<User | null> {
+  async updateById(
+    userID: string,
+    dataToUpdate: UserDTO
+  ): Promise<User | null> {
     const userToUpdate = await this.findById(userID);
     if (!userToUpdate) {
       return null;
@@ -70,6 +89,11 @@ export class DynamoDBUserRepository implements IUserRepository {
         id: userID,
       },
       UpdateExpression: 'set #name = :name, #email = :email, #age = :age',
+      ExpressionAttributeNames: {
+        '#name': 'name',
+        '#email': 'email',
+        '#age': 'age',
+      },
       ExpressionAttributeValues: {
         ':name': dataToUpdate.name,
         ':email': dataToUpdate.email,
@@ -78,10 +102,9 @@ export class DynamoDBUserRepository implements IUserRepository {
       ReturnValues: 'ALL_NEW',
     };
 
-    const result = await this.documentClient.update(params).promise();
-    const updatedUser = UserMapperDynamoDb.mapGetResultToUser(result);
+    await this.documentClient.update(params).promise();
 
-    return updatedUser;
+    return { id: userID, ...dataToUpdate };
   }
 
   async deleteById(userID: string): Promise<void> {
