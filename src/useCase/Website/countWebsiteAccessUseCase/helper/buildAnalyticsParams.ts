@@ -27,7 +27,7 @@ export class AnalyticsParamsBuilder {
   }
 
   private isValidDate(dateStr: string): boolean {
-    // Verificar se a data está no formato "YYYY-MM-DD" ou "DD-MM-YYYY"
+    // Verificar se a data está no formato "YYYY-MM-DD"
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     if (dateRegex.test(dateStr)) {
       return true;
