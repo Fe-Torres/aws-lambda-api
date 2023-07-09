@@ -26,7 +26,7 @@ export class DynamoDBUserRepository implements IUserRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const params: DocumentClient.ScanInput = {
+    const params: DocumentClient.QueryInput = {
       TableName: this.tableName,
       FilterExpression: 'email = :email',
       ExpressionAttributeValues: {
@@ -34,7 +34,7 @@ export class DynamoDBUserRepository implements IUserRepository {
       },
     };
 
-    const result = await this.documentClient.scan(params).promise();
+    const result = await this.documentClient.query(params).promise();
     const users = UserMapperDynamoDb.mapScanResultToUsers(result);
 
     if (users && users.length > 0) {
