@@ -18,7 +18,9 @@ export class UserMapperDynamoDb {
     };
   }
 
-  static mapGetResultToUser(result: DynamoDB.DocumentClient.GetItemOutput): User | null {
+  static mapGetResultToUser(
+    result: DynamoDB.DocumentClient.GetItemOutput
+  ): User | null {
     if (!result.Item) {
       return null;
     }
@@ -26,7 +28,9 @@ export class UserMapperDynamoDb {
     return this.mapToUser(result.Item as DynamoDBUserItem);
   }
 
-  static mapScanResultToUsers(result: DynamoDB.DocumentClient.ScanOutput): User[] {
+  static mapScanResultToUsers(
+    result: DynamoDB.DocumentClient.ScanOutput
+  ): User[] {
     if (!result.Items) {
       return [];
     }
@@ -39,8 +43,9 @@ export class UserMapperDynamoDb {
     }));
   }
 
-
-  static mapPutItemToUser(item: DynamoDB.DocumentClient.PutItemOutput): User {
+  static mapUpdateItemToUser(
+    item: DynamoDB.DocumentClient.PutItemOutput
+  ): User {
     return this.mapToUser(item.Attributes as DynamoDBUserItem);
   }
 }

@@ -26,7 +26,8 @@ export class DynamoDBUserRepository implements IUserRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const params: DocumentClient.QueryInput = {
+    // Alterar para um GSI
+    const params: DocumentClient.ScanInput = {
       TableName: this.tableName,
       FilterExpression: 'email = :email',
       ExpressionAttributeValues: {
@@ -34,9 +35,8 @@ export class DynamoDBUserRepository implements IUserRepository {
       },
     };
 
-    const result = await this.documentClient.query(params).promise();
+    const result = await this.documentClient.scan(params).promise();
     const users = UserMapperDynamoDb.mapScanResultToUsers(result);
-
     if (users && users.length > 0) {
       return users[0];
     }
@@ -102,9 +102,9 @@ export class DynamoDBUserRepository implements IUserRepository {
       ReturnValues: 'ALL_NEW',
     };
 
-    await this.documentClient.update(params).promise();
-
-    return { id: userID, ...dataToUpdate };
+    const response = await this.documentClient.update(params).promise();
+    const userUpdated = UserMapperDynamoDb.mapUpdateItemToUser(response);
+    return userUpdated;
   }
 
   async deleteById(userID: string): Promise<void> {
