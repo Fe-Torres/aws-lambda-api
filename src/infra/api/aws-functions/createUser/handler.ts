@@ -1,4 +1,3 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { formatJSONResponse } from '../../helper/api-gateway';
 import { middyfy } from '../../helper/lambda';
 import { StatusCode, StatusMessage } from '../../helper/enum';
@@ -6,10 +5,9 @@ import { makeUserUseCase } from '../../../../main/factories/user/createUserFacto
 import { UserDTO } from '../../../../model/user/interfaces/userDto';
 import { JoiValidator } from '../../helper/joiValidation';
 import schema from './schema';
+import { APIGatewayProxyResult } from 'aws-lambda';
 
-const createUser = async (
-  event
-): Promise<APIGatewayProxyResult> => {
+const createUser = async (event): Promise<APIGatewayProxyResult> => {
   const userData: UserDTO = event.body;
   try {
     JoiValidator.validate(userData, schema);

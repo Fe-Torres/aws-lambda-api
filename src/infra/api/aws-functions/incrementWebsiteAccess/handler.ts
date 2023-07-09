@@ -1,4 +1,4 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { APIGatewayProxyResult } from 'aws-lambda';
 import { formatJSONResponse } from '../../helper/api-gateway';
 import { middyfy } from '../../helper/lambda';
 import { StatusCode, StatusMessage } from '../../helper/enum';
@@ -9,9 +9,9 @@ import schema from './schema';
 const incrementWebsiteAccess = async (
   event
 ): Promise<APIGatewayProxyResult> => {
-  const { url }  = event.body;
+  const { url } = event.body;
   try {
-    JoiValidator.validate(url,schema);
+    JoiValidator.validate(url, schema);
 
     const incrementWebsiteAccessUseCase = makeIncrementWebsiteAccessUseCase();
     const website = await incrementWebsiteAccessUseCase.execute(url);
