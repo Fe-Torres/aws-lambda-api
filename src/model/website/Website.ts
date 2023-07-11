@@ -1,4 +1,5 @@
 import * as Joi from 'joi';
+import { InvalidDataError } from '../../main/errors/invalidDataError';
 
 export class Website {
   public url: string;
@@ -17,7 +18,7 @@ export class Website {
     const { error } = urlSchema.validate(url);
 
     if (error) {
-      throw new Error('Invalid URL format');
+      throw new InvalidDataError('Website');
     }
   }
 }

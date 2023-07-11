@@ -2,7 +2,7 @@ import {
   mockUserRepository,
   mockFindUserUseCaseByEmail,
   mockFindUserByIdUseCase,
-} from '../../helper/UserMocks';
+} from './Mock/UserMocks';
 import { UpdateUserUseCase } from '../updateUserUsecase/updateUser';
 
 describe('UpdateUserUseCase', () => {

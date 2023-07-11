@@ -1,4 +1,4 @@
-import { IWebsiteResponse } from '../../../infra/simpleAnalytics/helper/IResponse';
+import { IWebsiteResponse } from '../../../model/website/interfaces/IWebsiteResponse';
 import { Website } from '../../../model/website/Website';
 import {
   IAnalyticsParams,

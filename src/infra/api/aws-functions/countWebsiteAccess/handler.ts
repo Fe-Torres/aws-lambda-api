@@ -7,7 +7,7 @@ import { IWebsiteDTO } from '../../../../model/website/interfaces/WebsiteDto';
 
 const countWebsiteAccess = async (
   event: APIGatewayEvent
-): Promise<Promise<APIGatewayProxyResult>> => {
+): Promise<APIGatewayProxyResult> => {
   try {
     const WebsiteQueryParams: IWebsiteDTO = event.queryStringParameters;
     const countWebsiteAccessUseCase = makeCountWebsiteAccessUseCase();
@@ -22,11 +22,8 @@ const countWebsiteAccess = async (
     );
   } catch (error) {
     return formatJSONResponse(
-      {
-        message: StatusMessage.INTERNAL_SERVER_ERROR,
-        error: error.message,
-      },
-      StatusCode.INTERNAL_SERVER_ERROR
+      { message: error.message },
+      error.code || StatusCode.INTERNAL_SERVER_ERROR
     );
   }
 };

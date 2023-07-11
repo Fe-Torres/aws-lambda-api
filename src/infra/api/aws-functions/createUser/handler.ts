@@ -11,7 +11,7 @@ const createUser = async (event): Promise<APIGatewayProxyResult> => {
   const userData: UserDTO = event.body;
   try {
     JoiValidator.validate(userData, schema);
-
+    console.info(userData);
     const userUseCase = makeUserUseCase();
     const createdUser = await userUseCase.execute(userData);
 
@@ -24,11 +24,8 @@ const createUser = async (event): Promise<APIGatewayProxyResult> => {
     );
   } catch (error) {
     return formatJSONResponse(
-      {
-        message: StatusMessage.INTERNAL_SERVER_ERROR,
-        error: error.message,
-      },
-      StatusCode.INTERNAL_SERVER_ERROR
+      { message: error.message },
+      error.code || StatusCode.INTERNAL_SERVER_ERROR
     );
   }
 };

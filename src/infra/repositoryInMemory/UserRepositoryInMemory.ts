@@ -1,6 +1,7 @@
 import { User } from 'src/model/user/User';
 import { IUserRepository } from '@models/user/interfaces/IUserRepository';
 import { UserDTO } from '../../model/user/interfaces/userDto';
+import { ConflictApplicationError } from '../../main/errors/conflictError';
 
 export class UserRepositoryInMemory implements IUserRepository {
   private users: User[] = [
@@ -27,7 +28,7 @@ export class UserRepositoryInMemory implements IUserRepository {
   async save(user: User): Promise<User> {
     const userExists = await this.findById(user.id);
     if (userExists) {
-      throw new Error('User already exists');
+      throw new ConflictApplicationError('User already exists');
     }
     this.users.push(user);
     return user;

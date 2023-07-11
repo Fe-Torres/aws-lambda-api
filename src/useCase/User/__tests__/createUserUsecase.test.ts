@@ -1,7 +1,7 @@
 import {
   mockFindUserUseCaseByEmail,
   mockUserRepository,
-} from '../../helper/UserMocks';
+} from './Mock/UserMocks';
 import { CreateUserUseCase } from '../createUserUsecase/createUser';
 
 describe('CreateUserUseCase', () => {

@@ -1,5 +1,6 @@
 import { IAnalyticsParams } from '../../../model/website/interfaces/IWebsiteAccess';
-import { ConfigRequest, IWebsiteResponse } from './IResponse';
+import { IWebsiteResponse } from '../../../model/website/interfaces/IWebsiteResponse';
+import { IConfigRequest } from './IConfigRequest';
 
 export class AnalyticsRequestFactory {
   private apiVersion: string;
@@ -36,9 +37,9 @@ export class AnalyticsRequestFactory {
     return `${parsedUrl}.json`;
   }
 
-  public buildConfigRequest(): ConfigRequest {
+  public buildConfigRequest(): IConfigRequest {
     this.parseFieldsParams();
-    const configRequest: ConfigRequest = {
+    const configRequest: IConfigRequest = {
       headers: this.headers,
       params: {
         start: this._params.startDate,

@@ -1,4 +1,4 @@
-import { IWebsiteResponse } from '../../../infra/simpleAnalytics/helper/IResponse';
+import { IWebsiteResponse } from './IWebsiteResponse';
 
 export interface IAnalyticsParams {
   fields?: string;
@@ -8,5 +8,8 @@ export interface IAnalyticsParams {
 
 export interface IWebsiteAccess {
   incrementWebsiteAccess(urlToAnalyse: string);
-  countWebsiteAccess(urlToAnalyse: string, params?: IAnalyticsParams): Promise<IWebsiteResponse>;
+  countWebsiteAccess(
+    urlToAnalyse: string,
+    params?: IAnalyticsParams
+  ): Promise<IWebsiteResponse>;
 }

@@ -1,7 +1,7 @@
 import { UserRepositoryInMemory } from '../../../infra/repositoryInMemory/UserRepositoryInMemory';
 import { IUserRepository } from '../../../model/user/interfaces/IUserRepository';
 import { IFindUserByIdUseCase } from '../../../model/user/interfaces/IUserUseCase';
-import { mockUserRepository } from '../../helper/UserMocks';
+import { mockUserRepository } from './Mock/UserMocks';
 import { DeleteUserByIdUseCase } from '../deleteUserByIdUsecase/deleteUserById';
 import { FindUserByIdUseCase } from '../findUserByIdUsecase/findUserById';
 
