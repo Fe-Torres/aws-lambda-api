@@ -4,6 +4,7 @@ import {
   mockFindUserByIdUseCase,
 } from './Mock/UserMocks';
 import { UpdateUserUseCase } from '../updateUserUsecase/updateUser';
+import { NotFoundApplicationError } from '../../../main/errors/notFoundError';
 
 describe('UpdateUserUseCase', () => {
   let updateUserUseCase: UpdateUserUseCase;
@@ -44,9 +45,9 @@ describe('UpdateUserUseCase', () => {
       email: 'updated@example.com',
     };
 
-    await expect(updateUserUseCase.execute(userId, userData)).rejects.toThrow(
-      Error
-    );
+    await expect(
+      updateUserUseCase.execute(userId, userData)
+    ).rejects.toThrowError(new NotFoundApplicationError('User'));
   });
 
   test('should throw an error when new email is already in use', async () => {

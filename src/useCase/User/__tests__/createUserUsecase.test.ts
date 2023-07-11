@@ -3,6 +3,7 @@ import {
   mockUserRepository,
 } from './Mock/UserMocks';
 import { CreateUserUseCase } from '../createUserUsecase/createUser';
+import { ConflictApplicationError } from '../../../main/errors/conflictError';
 
 describe('CreateUserUseCase', () => {
   let createUserUseCase: CreateUserUseCase;
@@ -29,13 +30,15 @@ describe('CreateUserUseCase', () => {
     expect(result.email).toBe(userData.email);
   });
 
-  test('should throw an error when user already exists', async () => {
+  test('should throw an error when user email already exists', async () => {
     const userData = {
       name: 'Torres Tester',
       age: 25,
       email: 'apenasfotografo@gmail.com',
     };
 
-    await expect(createUserUseCase.execute(userData)).rejects.toThrow(Error);
+    await expect(createUserUseCase.execute(userData)).rejects.toThrowError(
+      new ConflictApplicationError('Email already exists')
+    );
   });
 });

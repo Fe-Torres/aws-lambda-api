@@ -1,4 +1,5 @@
 import { CountApiMock } from '../../../infra/countApiMock/countApiMock';
+import { InvalidDataError } from '../../../main/errors/invalidDataError';
 import { IWebsiteAccess } from '../../../model/website/interfaces/IWebsiteAccess';
 import { CountWebsiteAccessUseCase } from './countWebsiteAccess';
 
@@ -32,6 +33,8 @@ describe('CountWebsiteAccessUseCase', () => {
 
     const useCase = new CountWebsiteAccessUseCase(mockWebsiteAccess);
 
-    await expect(useCase.execute(invalidWebsiteDto)).rejects.toThrow(Error);
+    await expect(useCase.execute(invalidWebsiteDto)).rejects.toThrowError(
+      new InvalidDataError('Website')
+    );
   });
 });
