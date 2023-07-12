@@ -6,15 +6,24 @@ import { makeUpdateUserUseCase } from '../../../../main/factories/user/updateUse
 import { UserDTO } from '../../../../model/user/interfaces/userDto';
 import { JoiValidator } from '../../helper/joiValidation';
 import schema from './schema';
+import { handleErrorResponse } from '../../helper/handler-error';
+import { ActionLog, Logger } from '../../../../main/logs/Loger';
 
 const updateUser = async (event): Promise<APIGatewayProxyResult> => {
-  const { id } = event.pathParameters;
-  const userData: UserDTO = event.body;
   try {
+    const { id } = event.pathParameters;
+    const userData: UserDTO = event.body;
+    Logger.processMessage('UpdateUserFunction', ActionLog.INITIAL, {
+      userData,
+      id,
+    });
     JoiValidator.validate({ id, ...userData }, schema);
 
     const updateUserUseCase = makeUpdateUserUseCase();
     const updatedUser = await updateUserUseCase.execute(id, userData);
+    Logger.processMessage('UpdateUserFunction', ActionLog.END, {
+      updatedUser,
+    });
 
     return formatJSONResponse(
       {
@@ -24,10 +33,7 @@ const updateUser = async (event): Promise<APIGatewayProxyResult> => {
       StatusCode.OK
     );
   } catch (error) {
-    return formatJSONResponse(
-      { message: error.message },
-      error.code || StatusCode.INTERNAL_SERVER_ERROR
-    );
+    return handleErrorResponse(error);
   }
 };
 

@@ -6,14 +6,17 @@ import { UserDTO } from '../../../../model/user/interfaces/userDto';
 import { JoiValidator } from '../../helper/joiValidation';
 import schema from './schema';
 import { APIGatewayProxyResult } from 'aws-lambda';
+import { handleErrorResponse } from '../../helper/handler-error';
+import { ActionLog, Logger } from '../../../../main/logs/Loger';
 
 const createUser = async (event): Promise<APIGatewayProxyResult> => {
-  const userData: UserDTO = event.body;
   try {
+    const userData: UserDTO = event.body;
+    Logger.processMessage('CreateUserFunction', ActionLog.INITIAL, userData);
     JoiValidator.validate(userData, schema);
-    console.info(userData);
     const userUseCase = makeUserUseCase();
     const createdUser = await userUseCase.execute(userData);
+    Logger.processMessage('CreateUserFunction', ActionLog.END, userData);
 
     return formatJSONResponse(
       {
@@ -23,10 +26,7 @@ const createUser = async (event): Promise<APIGatewayProxyResult> => {
       StatusCode.OK
     );
   } catch (error) {
-    return formatJSONResponse(
-      { message: error.message },
-      error.code || StatusCode.INTERNAL_SERVER_ERROR
-    );
+    return handleErrorResponse(error);
   }
 };
 
