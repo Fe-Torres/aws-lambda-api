@@ -6,17 +6,23 @@ import {
 } from '../../../model/website/interfaces/IWebsiteAccess';
 import { IWebsiteDTO } from '../../../model/website/interfaces/WebsiteDto';
 import { AnalyticsParamsBuilder } from './helper/buildAnalyticsParams';
+import { ActionLog, Logger } from '../../../main/logs/Loger';
 
 export class CountWebsiteAccessUseCase {
-  constructor(private websiteAccess: IWebsiteAccess) {}
+  private className: string;
+  constructor(private websiteAccess: IWebsiteAccess) {
+    this.className = 'CountWebsiteAccessUseCase';
+  }
 
   async execute(websiteDto: IWebsiteDTO): Promise<IWebsiteResponse> {
+    Logger.processMessage(this.className, ActionLog.INITIAL);
     const website = new Website(websiteDto.url);
     const analyticsParams = this.buildAnalyticsParams(websiteDto);
     const webSiteData = await this.websiteAccess.countWebsiteAccess(
       website.url,
       analyticsParams
     );
+    Logger.processMessage(this.className, ActionLog.END);
     return webSiteData;
   }
 

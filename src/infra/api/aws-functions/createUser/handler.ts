@@ -7,14 +7,16 @@ import { JoiValidator } from '../../helper/joiValidation';
 import schema from './schema';
 import { APIGatewayProxyResult } from 'aws-lambda';
 import { handleErrorResponse } from '../../helper/handler-error';
+import { ActionLog, Logger } from '../../../../main/logs/Loger';
 
 const createUser = async (event): Promise<APIGatewayProxyResult> => {
-  const userData: UserDTO = event.body;
   try {
+    const userData: UserDTO = event.body;
+    Logger.processMessage('CreateUserFunction', ActionLog.INITIAL, userData);
     JoiValidator.validate(userData, schema);
-    console.info(userData);
     const userUseCase = makeUserUseCase();
     const createdUser = await userUseCase.execute(userData);
+    Logger.processMessage('CreateUserFunction', ActionLog.END, userData);
 
     return formatJSONResponse(
       {

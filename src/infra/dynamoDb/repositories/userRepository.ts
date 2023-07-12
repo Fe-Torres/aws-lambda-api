@@ -4,6 +4,7 @@ import { User } from '@models/user/User';
 import dynamoDBClient from '../client';
 import { UserDTO } from '../../../model/user/interfaces/userDto';
 import { UserMapperDynamoDb } from './helper/UserMapper';
+import { ActionLog, Logger } from '../../../main/logs/Loger';
 
 export class DynamoDBUserRepository implements IUserRepository {
   private readonly tableName: string;
@@ -15,17 +16,19 @@ export class DynamoDBUserRepository implements IUserRepository {
   }
 
   async findAll(): Promise<UserDTO[]> {
+    Logger.processMessage(this.findAll.name, ActionLog.INITIAL);
     const params: DocumentClient.ScanInput = {
       TableName: this.tableName,
     };
 
     const result = await this.documentClient.scan(params).promise();
     const users = UserMapperDynamoDb.mapScanResultToUsers(result);
-
+    Logger.processMessage(this.findAll.name, ActionLog.END);
     return users;
   }
 
   async findByEmail(email: string): Promise<User | null> {
+    Logger.processMessage(this.findByEmail.name, ActionLog.INITIAL);
     // Alterar para um GSI?
     const params: DocumentClient.ScanInput = {
       TableName: this.tableName,
@@ -37,6 +40,7 @@ export class DynamoDBUserRepository implements IUserRepository {
 
     const result = await this.documentClient.scan(params).promise();
     const users = UserMapperDynamoDb.mapScanResultToUsers(result);
+    Logger.processMessage(this.findByEmail.name, ActionLog.END);
     if (users && users.length > 0) {
       return users[0];
     }
@@ -45,6 +49,8 @@ export class DynamoDBUserRepository implements IUserRepository {
   }
 
   async save(user: User): Promise<User> {
+    Logger.processMessage(this.save.name, ActionLog.INITIAL);
+
     const params: DocumentClient.PutItemInput = {
       TableName: this.tableName,
       Item: {
@@ -56,11 +62,13 @@ export class DynamoDBUserRepository implements IUserRepository {
     };
 
     await this.documentClient.put(params).promise();
-
+    Logger.processMessage(this.save.name, ActionLog.END);
     return user;
   }
 
   async findById(userID: string): Promise<User | null> {
+    Logger.processMessage(this.findById.name, ActionLog.INITIAL);
+
     const params: DocumentClient.GetItemInput = {
       TableName: this.tableName,
       Key: {
@@ -70,7 +78,7 @@ export class DynamoDBUserRepository implements IUserRepository {
 
     const result = await this.documentClient.get(params).promise();
     const user = UserMapperDynamoDb.mapGetResultToUser(result);
-
+    Logger.processMessage(this.findById.name, ActionLog.END);
     return user;
   }
 
@@ -78,6 +86,7 @@ export class DynamoDBUserRepository implements IUserRepository {
     userID: string,
     dataToUpdate: UserDTO
   ): Promise<User | null> {
+    Logger.processMessage(this.updateById.name, ActionLog.INITIAL);
     const userToUpdate = await this.findById(userID);
     if (!userToUpdate) {
       return null;
@@ -104,10 +113,12 @@ export class DynamoDBUserRepository implements IUserRepository {
 
     const response = await this.documentClient.update(params).promise();
     const userUpdated = UserMapperDynamoDb.mapUpdateItemToUser(response);
+    Logger.processMessage(this.updateById.name, ActionLog.END);
     return userUpdated;
   }
 
   async deleteById(userID: string): Promise<void> {
+    Logger.processMessage(this.deleteById.name, ActionLog.INITIAL);
     const params: DocumentClient.DeleteItemInput = {
       TableName: this.tableName,
       Key: {
@@ -116,5 +127,7 @@ export class DynamoDBUserRepository implements IUserRepository {
     };
 
     await this.documentClient.delete(params).promise();
+    Logger.processMessage(this.deleteById.name, ActionLog.END);
+    return;
   }
 }

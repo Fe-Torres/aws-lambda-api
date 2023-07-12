@@ -4,16 +4,17 @@ import { middyfy } from '../../helper/lambda';
 import { StatusCode, StatusMessage } from '../../helper/enum';
 import { makeFindUserByIdUseCase } from '../../../../main/factories/user/findUserByIdFactory';
 import { handleErrorResponse } from '../../helper/handler-error';
+import { ActionLog, Logger } from '../../../../main/logs/Loger';
 
 const findUserById = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
-  const { id } = event.pathParameters;
-
   try {
+    const { id } = event.pathParameters;
+    Logger.processMessage('FindUserByIdFunction', ActionLog.INITIAL, id);
     const findUserByIdUseCase = makeFindUserByIdUseCase();
     const user = await findUserByIdUseCase.execute(id);
-
+    Logger.processMessage('FindUserByIdFunction', ActionLog.END, id);
     return formatJSONResponse(
       {
         message: StatusMessage.OK,

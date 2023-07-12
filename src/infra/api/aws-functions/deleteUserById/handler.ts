@@ -4,15 +4,17 @@ import { middyfy } from '../../helper/lambda';
 import { StatusCode, StatusMessage } from '../../helper/enum';
 import { makeDeleteUserByIdUseCase } from '../../../../main/factories/user/deleteUserByIdFactory';
 import { handleErrorResponse } from '../../helper/handler-error';
+import { ActionLog, Logger } from '../../../../main/logs/Loger';
 
 const deleteUserById = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
-  const { id } = event.pathParameters;
-
   try {
+    const { id } = event.pathParameters;
+    Logger.processMessage('DeleteUserByIdFunction', ActionLog.INITIAL, id);
     const deleteUserByIdUseCase = makeDeleteUserByIdUseCase();
     await deleteUserByIdUseCase.execute(id);
+    Logger.processMessage('DeleteUserByIdFunction', ActionLog.END, id);
 
     return formatJSONResponse(
       {

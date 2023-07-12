@@ -6,16 +6,18 @@ import { makeIncrementWebsiteAccessUseCase } from '../../../../main/factories/we
 import { JoiValidator } from '../../helper/joiValidation';
 import schema from './schema';
 import { handleErrorResponse } from '../../helper/handler-error';
+import { ActionLog, Logger } from '../../../../main/logs/Loger';
 
 const incrementWebsiteAccess = async (
   event
 ): Promise<APIGatewayProxyResult> => {
-  const { url } = event.body;
   try {
+    const { url } = event.body;
+    Logger.processMessage('incrementWebsiteAccess', ActionLog.INITIAL, url);
     JoiValidator.validate(url, schema);
-
     const incrementWebsiteAccessUseCase = makeIncrementWebsiteAccessUseCase();
     const website = await incrementWebsiteAccessUseCase.execute(url);
+    Logger.processMessage('incrementWebsiteAccess', ActionLog.END, url);
     return formatJSONResponse(
       {
         message: StatusMessage.OK,
