@@ -2,7 +2,7 @@ import * as AWS from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
 const dynamoDBClient = (): DocumentClient => {
-  return new AWS.DynamoDB.DocumentClient();
+  return new AWS.DynamoDB.DocumentClient({ apiVersion: '2' });
 };
 
 export default dynamoDBClient;

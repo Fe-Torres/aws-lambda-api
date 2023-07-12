@@ -26,7 +26,7 @@ export class DynamoDBUserRepository implements IUserRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    // Alterar para um GSI
+    // Alterar para um GSI?
     const params: DocumentClient.ScanInput = {
       TableName: this.tableName,
       FilterExpression: 'email = :email',

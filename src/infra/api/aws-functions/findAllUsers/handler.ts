@@ -3,6 +3,7 @@ import { middyfy } from '../../helper/lambda';
 import { StatusCode, StatusMessage } from '../../helper/enum';
 import { makeFindAllUsersUseCase } from '../../../../main/factories/user/findAllUsersFactory';
 import { APIGatewayProxyResult } from 'aws-lambda';
+import { handleErrorResponse } from '../../helper/handler-error';
 
 const findAllUsers = async (): Promise<APIGatewayProxyResult> => {
   try {
@@ -17,10 +18,7 @@ const findAllUsers = async (): Promise<APIGatewayProxyResult> => {
       StatusCode.OK
     );
   } catch (error) {
-    return formatJSONResponse(
-      { message: error.message },
-      error.code || StatusCode.INTERNAL_SERVER_ERROR
-    );
+    return handleErrorResponse(error);
   }
 };
 

@@ -5,6 +5,7 @@ import { StatusCode, StatusMessage } from '../../helper/enum';
 import { makeIncrementWebsiteAccessUseCase } from '../../../../main/factories/website/incrementWebsiteAccessFactory';
 import { JoiValidator } from '../../helper/joiValidation';
 import schema from './schema';
+import { handleErrorResponse } from '../../helper/handler-error';
 
 const incrementWebsiteAccess = async (
   event
@@ -23,10 +24,7 @@ const incrementWebsiteAccess = async (
       StatusCode.OK
     );
   } catch (error) {
-    return formatJSONResponse(
-      { message: error.message },
-      error.code || StatusCode.INTERNAL_SERVER_ERROR
-    );
+    return handleErrorResponse(error);
   }
 };
 

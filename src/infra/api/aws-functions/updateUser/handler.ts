@@ -6,6 +6,7 @@ import { makeUpdateUserUseCase } from '../../../../main/factories/user/updateUse
 import { UserDTO } from '../../../../model/user/interfaces/userDto';
 import { JoiValidator } from '../../helper/joiValidation';
 import schema from './schema';
+import { handleErrorResponse } from '../../helper/handler-error';
 
 const updateUser = async (event): Promise<APIGatewayProxyResult> => {
   const { id } = event.pathParameters;
@@ -24,10 +25,7 @@ const updateUser = async (event): Promise<APIGatewayProxyResult> => {
       StatusCode.OK
     );
   } catch (error) {
-    return formatJSONResponse(
-      { message: error.message },
-      error.code || StatusCode.INTERNAL_SERVER_ERROR
-    );
+    return handleErrorResponse(error);
   }
 };
 
