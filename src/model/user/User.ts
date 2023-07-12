@@ -1,4 +1,5 @@
 import * as Joi from 'joi';
+import { InvalidDataError } from '../../main/errors/invalidDataError';
 
 export class User {
   id: string;
@@ -9,7 +10,7 @@ export class User {
   constructor(id: string, name: string, age: number, email: string) {
     const { error } = User.validateInput(id, name, age, email);
     if (error) {
-      throw new Error(`Invalid user data: ${error.message}`);
+      throw new InvalidDataError('User');
     }
     this.id = id;
     this.name = name;

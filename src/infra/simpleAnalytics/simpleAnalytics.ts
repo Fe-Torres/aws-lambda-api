@@ -3,8 +3,10 @@ import {
   IWebsiteAccess,
 } from '../../model/website/interfaces/IWebsiteAccess';
 import axios from 'axios';
-import { AnalyticsRequestFactory } from './helper/AnalyticsRequest';
-import { IWebsiteResponse } from './helper/IResponse';
+import { AnalyticsRequestFactory } from './helper/AnalyticsRequestFactory';
+import { IWebsiteResponse } from '../../model/website/interfaces/IWebsiteResponse';
+import { BaseApplicationError } from '../../main/errors/baseApplicationError';
+import { StatusCode } from '../api/helper/enum';
 
 export class SimpleAnalytics implements IWebsiteAccess {
   async countWebsiteAccess(
@@ -21,7 +23,8 @@ export class SimpleAnalytics implements IWebsiteAccess {
       );
       return websiteResponse;
     } catch (error) {
-      throw new Error(`Error getting analysis data: ${error.message}`);
+      console.error(error.message);
+      throw new BaseApplicationError('Internal server Error', StatusCode.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -32,7 +35,8 @@ export class SimpleAnalytics implements IWebsiteAccess {
       await axios.get(urlToAnalyse, { headers: { userAgent } });
       return;
     } catch (error) {
-      throw new Error(`Error when incrementing access: ${error.message}`);
+      console.error(error.message);
+      throw new BaseApplicationError('Internal server Error', StatusCode.INTERNAL_SERVER_ERROR);
     }
   }
 }

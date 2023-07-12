@@ -22,11 +22,8 @@ const findUserById = async (
     );
   } catch (error) {
     return formatJSONResponse(
-      {
-        message: StatusMessage.INTERNAL_SERVER_ERROR,
-        error: error.message,
-      },
-      StatusCode.INTERNAL_SERVER_ERROR
+      { message: error.message },
+      error.code || StatusCode.INTERNAL_SERVER_ERROR
     );
   }
 };

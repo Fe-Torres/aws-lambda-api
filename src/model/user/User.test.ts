@@ -1,3 +1,4 @@
+import { InvalidDataError } from '../../main/errors/invalidDataError';
 import { User } from './User';
 
 describe('User', () => {
@@ -28,15 +29,18 @@ describe('User', () => {
 
     expect(
       () => new User(invalidId, 'Torres Tester', 25, 'tt@example.com')
-    ).toThrow(Error);
-    expect(() => new User('1', invalidName, 25, 'tt@example.com')).toThrow(
-      Error
+    ).toThrowError(new InvalidDataError('User'));
+
+    expect(() => new User('1', invalidName, 25, 'tt@example.com')).toThrowError(
+      new InvalidDataError('User')
     );
+
     expect(
       () => new User('1', 'Torres Tester', invalidAge, 'tt@example.com')
-    ).toThrow(Error);
-    expect(() => new User('1', 'Torres Tester', 25, invalidEmail)).toThrow(
-      Error
+    ).toThrowError(new InvalidDataError('User'));
+
+    expect(() => new User('1', 'Torres Tester', 25, invalidEmail)).toThrowError(
+      new InvalidDataError('User')
     );
   });
 });

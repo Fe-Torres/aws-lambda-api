@@ -1,3 +1,4 @@
+import { InvalidDataError } from '../../main/errors/invalidDataError';
 import { Website } from './Website';
 
 describe('Website', () => {
@@ -28,6 +29,6 @@ describe('Website', () => {
     expect(() => {
       // Act
       new Website(invalidUrl);
-    }).toThrow('Invalid URL format');
+    }).toThrowError(new InvalidDataError('Website'));
   });
 });

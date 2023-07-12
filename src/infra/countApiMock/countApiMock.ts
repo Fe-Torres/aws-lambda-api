@@ -1,5 +1,7 @@
+import { BadRequestApplicationError } from '../../main/errors/badRequestError';
+import { NotFoundApplicationError } from '../../main/errors/notFoundError';
 import { IWebsiteAccess } from '../../model/website/interfaces/IWebsiteAccess';
-import { IWebsiteResponse } from '../simpleAnalytics/helper/IResponse';
+import { IWebsiteResponse } from '../../model/website/interfaces/IWebsiteResponse';
 
 export class CountApiMock implements IWebsiteAccess {
   private listWebsiteData: IWebsiteResponse[] = [
@@ -35,13 +37,13 @@ export class CountApiMock implements IWebsiteAccess {
 
   private findWebsite(url): IWebsiteResponse {
     if (!url) {
-      throw new Error('URL is required');
+      throw new BadRequestApplicationError('URL is required');
     }
 
     const website = this.listWebsiteData.find((w) => w.url === url);
 
     if (!website) {
-      throw new Error('Website not found');
+      throw new NotFoundApplicationError('Website');
     }
 
     return website;

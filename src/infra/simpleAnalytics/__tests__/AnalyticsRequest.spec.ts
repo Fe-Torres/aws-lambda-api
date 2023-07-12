@@ -1,4 +1,4 @@
-import { AnalyticsRequestFactory } from '../helper/AnalyticsRequest';
+import { AnalyticsRequestFactory } from '../helper/AnalyticsRequestFactory';
 
 describe('AnalyticsRequestFactory', () => {
   const params = {
